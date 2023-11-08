@@ -6,14 +6,17 @@ import cp2023.base.DeviceId;
 import java.util.HashSet;
 
 public class Device {
-    private DeviceId id;
-    private int capacity;
+    private final DeviceId id;
+    private final int capacity;
     private int taken = 0;
-    private HashSet<ComponentId> components = new HashSet<ComponentId>();
+    private final HashSet<ComponentId> components = new HashSet<ComponentId>();
 
     public Device(DeviceId id, int capacity) {
         this.id = id;
         this.capacity = capacity;
+    }
+    public boolean containsComponent(ComponentId componentId) {
+        return components.contains(componentId);
     }
 
     public void addInitialComponent(ComponentId componentId) {
