@@ -4,6 +4,8 @@ import cp2023.base.ComponentId;
 import cp2023.base.DeviceId;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Device {
     private final DeviceId id;
@@ -11,21 +13,38 @@ public class Device {
     private int taken = 0;
     private final HashSet<ComponentId> components = new HashSet<ComponentId>();
 
+    List<Transfer> incomingTransfers = new LinkedList<Transfer>();
+    List<Transfer> outgoingTransfers = new LinkedList<Transfer>();
     public Device(DeviceId id, int capacity) {
         this.id = id;
         this.capacity = capacity;
+    }
+    public boolean isTransferred() {
+        return outgoingTransfers.size() > 0;
+    }
+    public boolean isFree() {
+        return components.size() < capacity;
+    }
+    public List<Transfer> getOutgoingTransfers() {
+        return outgoingTransfers;
+    }
+
+    public List<Transfer> getIncomingTransfers() {
+        return incomingTransfers;
     }
     public boolean containsComponent(ComponentId componentId) {
         return components.contains(componentId);
     }
 
-    public void addInitialComponent(ComponentId componentId) {
+    public void addComponent(ComponentId componentId) {
         components.add(componentId);
-        taken++;
+    }
+    public void removeComponent(ComponentId componentId) {
+        components.remove(componentId);
     }
 
     public boolean checkMoreThanCapacity() {
-        return taken > capacity;
+        return components.size() > capacity;
     }
 
     @Override

@@ -2,13 +2,18 @@ package cp2023.tests;
 
 import cp2023.base.ComponentId;
 import cp2023.base.DeviceId;
+import cp2023.exceptions.ComponentIsBeingOperatedOn;
+import cp2023.exceptions.TransferException;
 import cp2023.solution.StorageSystemFactory;
 
 import java.util.HashMap;
+import java.util.concurrent.Semaphore;
 
 public class TestLegalityOfArguments {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TransferException {
+
+
         DeviceId dev1 = new DeviceId(1);
         DeviceId dev2 = new DeviceId(2);
         DeviceId dev3 = new DeviceId(3);
@@ -41,6 +46,7 @@ public class TestLegalityOfArguments {
         initialComponentMapping.put(comp7, dev3);
         initialComponentMapping.put(comp8, dev3);
         initialComponentMapping.put(comp9, dev3);
+
 
         StorageSystemFactory.newSystem(deviceCapacities, initialComponentMapping);
     }
