@@ -57,13 +57,10 @@ public class MoveTransfer extends Transfer {
             }
             else if (dfsCalculator.isCycle(this)) {
                 List<Transfer> cycle = dfsCalculator.getCycle();
-                for (Transfer transfer : cycle) {
-                    System.out.println(transfer.componentId);
+                for (int i = 0; i < cycle.size() - 1; i++) {
+                    cycle.get(i).setConnectedTransfer(cycle.get(i + 1));
                 }
-                for (int i = 1; i < cycle.size(); i++) {
-                    cycle.get(i).setConnectedTransfer(cycle.get(i - 1));
-                }
-                connectedTransfer = cycle.get(cycle.size() - 1);
+                cycle.get(cycle.size() - 1).setConnectedTransfer(this);
                 for (int i = 1; i < cycle.size(); i++) {
                     Transfer transfer = cycle.get(i);
                     devices.get(transfer.getDestinationDeviceId()).getIncomingTransfers().remove(transfer);
