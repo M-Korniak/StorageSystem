@@ -16,6 +16,7 @@ public abstract class Transfer {
     protected final ComponentId componentId;
     protected final Semaphore semaphore = new Semaphore(0, true);
 
+
     public Transfer(ComponentTransfer componentTransfer) {
         this.componentTransfer = componentTransfer;
         this.componentId = componentTransfer.getComponentId();
@@ -32,5 +33,11 @@ public abstract class Transfer {
     }
     public void setConnectedTransfer(Transfer connectedTransfer) {
         this.connectedTransfer = connectedTransfer;
+    }
+    public DeviceId getDestinationDeviceId() {
+        return destinationDeviceId;
+    }
+    public DeviceId getSourceDeviceId() {
+        return sourceDeviceId;
     }
 }

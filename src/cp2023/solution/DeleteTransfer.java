@@ -38,12 +38,11 @@ public class DeleteTransfer extends Transfer {
         componentTransfer.prepare();
         try {
             mutex.acquire();
+            myDevice.removeComponent(componentId);
             if (connectedTransfer == null) {
-                myDevice.removeComponent(componentId);
                 outgoingFromMyDevice.remove(this);
             }
             else {
-                myDevice.removeComponent(componentId);
                 myDevice.addComponent(connectedTransfer.getComponentId());
                 connectedTransfer.wakeUp();
             }

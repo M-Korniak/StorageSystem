@@ -30,9 +30,9 @@ public class AddTransfer extends Transfer{
                 mutex.release();
             }
             else if (myDevice.isTransferred()) {
-                connectedTransfer = outgoingFromMyDevice.get(0);
-                outgoingFromMyDevice.remove(connectedTransfer);
-                connectedTransfer.setConnectedTransfer(this);
+                Transfer wakingTransfer = outgoingFromMyDevice.get(0);
+                outgoingFromMyDevice.remove(wakingTransfer);
+                wakingTransfer.setConnectedTransfer(this);
                 mutex.release();
             }
             else {
@@ -56,6 +56,8 @@ public class AddTransfer extends Transfer{
             transferredComponents.remove(componentId);
         } catch (InterruptedException e) {
             throw new RuntimeException("panic: unexpected thread interruption");
+        } finally {
+            mutex.release();
         }
     }
 
