@@ -10,7 +10,6 @@ import java.util.List;
 public class Device {
     private final DeviceId id;
     private final int capacity;
-    private int taken = 0;
     private final HashSet<ComponentId> components = new HashSet<ComponentId>();
 
     List<Transfer> incomingTransfers = new LinkedList<Transfer>();

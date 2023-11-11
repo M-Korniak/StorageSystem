@@ -12,7 +12,7 @@ import cp2023.exceptions.TransferException;
 import cp2023.solution.StorageSystemFactory;
 
 
-public final class TestCycle {
+public final class Tester {
 
     public static void main(String[] args) {
         StorageSystem system = setupSystem();
@@ -41,7 +41,7 @@ public final class TestCycle {
         deviceCapacities.put(dev1, 3);
         deviceCapacities.put(dev2, 3);
         deviceCapacities.put(dev3, 3);
-        deviceCapacities.put(dev4, 1);
+        deviceCapacities.put(dev4, 2);
 
         HashMap<ComponentId, DeviceId> initialComponentMapping = new HashMap<>(9);
 
@@ -81,10 +81,7 @@ public final class TestCycle {
             public void run() {
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has started.");
                 executeTransfer(system, 101, 1, 2, 10);
-                sleep(30);
-                executeTransfer(system, 101, 2, 1, 10);
-                sleep(20);
-                executeTransfer(system, 101, 1, 2, 10);
+                executeTransfer(system, 101, 2, 3, 10);
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has finished.");
             }
         }));
@@ -92,11 +89,9 @@ public final class TestCycle {
             @Override
             public void run() {
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has started.");
-                executeTransfer(system, 104, 2, 1, 10);
-                sleep(30);
-                executeTransfer(system, 104, 1, 2, 15);
-                sleep(30);
-                executeTransfer(system, 104, 2, 3, 15);
+                executeTransfer(system, 104, 2, 3, 10);
+                sleep(50);
+                executeTransfer(system, 104, 3, 4, 15);
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has finished.");
             }
         }));
@@ -115,7 +110,7 @@ public final class TestCycle {
             public void run() {
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has started.");
                 executeTransfer(system, 107, 3, 4, 20);
-                sleep(25);
+                sleep(55);
                 executeTransfer(system, 107, 4, 1, 25);
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has finished.");
             }
@@ -125,7 +120,7 @@ public final class TestCycle {
             public void run() {
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has started.");
                 executeTransfer(system, 110, 4, 1, 20);
-                sleep(15);
+                sleep(55);
                 executeTransfer(system, 110, 1, 2, 23);
                 System.out.println("Transferer " + Thread.currentThread().getId() + " has finished.");
             }
