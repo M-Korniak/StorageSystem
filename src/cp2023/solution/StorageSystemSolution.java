@@ -56,13 +56,13 @@ public class StorageSystemSolution implements StorageSystem {
             else if (destinationDeviceId != null && !devices.containsKey(destinationDeviceId))
                 throw new DeviceDoesNotExist(destinationDeviceId);
             else if (sourceDeviceId == null && components.contains(componentId))
-                throw new ComponentAlreadyExists(componentId);
+                throw new ComponentAlreadyExists(componentId, destinationDeviceId);
             else if (sourceDeviceId != null && !devices.get(sourceDeviceId).containsComponent(componentId))
                 throw new ComponentDoesNotExist(componentId, sourceDeviceId);
-            else if (destinationDeviceId != null && devices.get(destinationDeviceId).containsComponent(componentId))
-                throw new ComponentDoesNotNeedTransfer(componentId, destinationDeviceId);
             else if (transferredComponents.contains(componentId))
                 throw new ComponentIsBeingOperatedOn(componentId);
+            else if (destinationDeviceId != null && devices.get(destinationDeviceId).containsComponent(componentId))
+                throw new ComponentDoesNotNeedTransfer(componentId, destinationDeviceId);
         } catch (InterruptedException e) {
             throw new RuntimeException("panic: unexpected thread interruption");
         } finally {

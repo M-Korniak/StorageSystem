@@ -73,13 +73,14 @@ public class MoveTransfer extends Transfer {
                 mutex.release();
                 semaphore.acquire();
                 mutex.acquire();
-                if (!incomingToSourceDevice.isEmpty()) {
-                    connectedTransfer = incomingToSourceDevice.get(0);
-                    incomingToSourceDevice.remove(connectedTransfer);
-                    connectedTransfer.wakeUp();
-                }
-                else {
-                    outgoingFromSourceDevice.add(this);
+                if (connectedTransfer == null) {
+                    if (!incomingToSourceDevice.isEmpty()) {
+                        connectedTransfer = incomingToSourceDevice.get(0);
+                        incomingToSourceDevice.remove(connectedTransfer);
+                        connectedTransfer.wakeUp();
+                    } else {
+                        outgoingFromSourceDevice.add(this);
+                    }
                 }
                 mutex.release();
             }
